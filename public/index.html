@@ -7,58 +7,12 @@
     <title>GesAlunos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="scripts.js"></script>
 </head>
-<body class="bg-light">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <div class="d-flex flex-grow-1">
-            <span class="w-100 d-lg-none d-block">
-                <!-- hidden spacer to center brand on mobile --></span>
-            <a class="navbar-brand" href="index.html"> GesAlunos </a>
-            <div class="w-100 text-right">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#myNavbar7">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-            </div>
-        </div>
-        <div class="collapse navbar-collapse flex-grow-1 text-right" id="myNavbar7">
-            <ul class="navbar-nav ms-auto flex-nowrap">
-                <li class="nav-item">
-                    <a href="consultar.html" class="nav-link">Consultar Alunos</a>
-                </li>
-                <li class="nav-item">
-                    <a href="inserir.html" class="nav-link">Inserir Alunos</a>
-                </li>
-                <li class="nav-item">
-                    <a href="login.html" class="nav-link">Login</a>
-                </li>
-            
-            </ul>
-        </div>
-    </div>
-</nav>
-<div class="text-center">
-    <span class="badge badge-dark badge-pill"> this is viewport center </span>
-</div>
+<body onload="loadNavBar()" class="bg-light">
+  <div id="nbar">
 
-<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="myModalLabel">Modal header</h3>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
-            </div>
-            <div class="modal-body">
-                <p>One fine body…</p>
-            </div>
-            <div class="modal-footer">
-                <button class="btn" data-bs-dismiss="modal" aria-hidden="true">Close</button>
-                <button class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- FIM DA NAVBAR-->
+  </div>
 
 <!-- FOOTER-->  
 <div class=" mt-5 p-4 bg-dark text-white text-center footer" >
