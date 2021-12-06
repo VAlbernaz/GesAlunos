@@ -4,9 +4,11 @@ const  path = require('path')
 
 app.use(express.static('./public'))
 
-app.get('/navbar',(req,res)=>{
-   res.sendFile(path.join(__dirname, '/public/navbar.html'))
-})
+//define as rotas possiveis
+app.use('/navbar',require('./routes/navbarRoute'))
+app.use('/formdata',require('./routes/formdataRoute'))
+
+
 app.get('/', function(req,response){
    response.sendFile(path.join(__dirname, '/public.index.html'))
 })
