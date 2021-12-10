@@ -1,3 +1,5 @@
+
+
 function init(){
     loadNavBar()
     getTipos()
@@ -56,44 +58,60 @@ function getDados(){
     
         
         //!!Valida Numeros!!
-        //Verifica se o moradaN e telem é inteiro 
-        //if(Number.isInteger(moradaN)&& Number.isInteger(telem)){
-            //Cria um objeto com os
-            let i=0
-            for(i;i<telem.length;i++)
+        //Verifica se o telem é inteiro 
+        let i=0
+        for(i;i<telem.length;i++)
+        {
+            let c = telem.charAt(i)
+            console.log(c)
+            if(isNaN(telem.charAt(i)))
             {
-                let c = telem.charAt(i)
-                console.log(c)
-                if(isNaN(c))
-                {
-                    alert("numero inválido")
-                    break
+                alert("numero inválido")
+                break
                     
-                }
-            
             }
-            if(i==telem.length)
-            {
-                //Passar dados de String para Inteiros
-                moradaN = parseInt(moradaN);
-                telem = parseInt(telem);
-            }
+               
+        }
             
+        if(i==telem.length)
+        {
+            //Passar dados de String para Inteiros
+                ///moradaN = parseInt(moradaN);
+            telem = parseInt(telem);
+            tipo = parseInt(tipo)
+
+            //Gurada num Objeto JSON
             var dados=
-            {"Dados": 
-                {"Nome Completo": nome,
-                "Morada": morada,
-                "Morada Nº": moradaN,
-                "Data de Nascimento": date,
-                "Nº Telemovel": telem,
-                "E-mail": email,
-                "Cargo": tipo}
+            {   
+                nomeutilizador: nome,
+                moradarua: morada,
+                moradanumero: moradaN,
+                datanascimento: date,
+                telemovel: telem,
+                email: email,
+                idtipos: tipo
             }
+                
+        }
             //const dados = [nome,morada,moradaN,date,telem,email,tipo]//Guarda dados num Array 
-        console.log(dados)
-       // }else{//lança alerta
-        //   alert("Dados Inválidos!")
-        //}
+            let jsonDados = JSON.stringify(dados)
+            
+            /* !!!!IMPORTANTE!!!*/
+            //preparar o pedido
+            const options = {
+                method: 'POST',
+                Header: {
+                    'Content-type': 'application/json'
+                },
+                body: jsonDados
+            }
+            fetch('http://localhost:3000/inserirUtilizador',options)
+            .then(res => res.json())
+            .then(res => alert(res.response))
+            .catch((err)=>{
+                alert('Ocorreu um erro no pedido')
+            })
+        
     }else{
         const classlb= document.getElementsByClassName('obrig')
         for(let i=0;i<classlb.length;i++){
