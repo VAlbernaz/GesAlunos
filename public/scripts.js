@@ -1,5 +1,4 @@
 
-
 function init(){
     loadNavBar()
     getTipos()
@@ -92,26 +91,26 @@ function getDados(){
                 idtipos: tipo
             }
                 
-        }
-            //const dados = [nome,morada,moradaN,date,telem,email,tipo]//Guarda dados num Array 
-            let jsonDados = JSON.stringify(dados)
-            
-            /* !!!!IMPORTANTE!!!*/
-            //preparar o pedido
-            const options = {
-                method: 'POST',
-                Header: {
-                    'Content-type': 'application/json'
-                },
-                body: jsonDados
-            }
-            fetch('http://localhost:3000/inserirUtilizador',options)
-            .then(res => res.json())
-            .then(res => alert(res.response))
-            .catch((err)=>{
-                alert('Ocorreu um erro no pedido')
-            })
         
+        //const dados = [nome,morada,moradaN,date,telem,email,tipo]//Guarda dados num Array 
+        let jsonDados = JSON.stringify(dados)
+            
+        /* !!!!IMPORTANTE!!!*/
+        //preparar o pedido
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: jsonDados
+        }
+        fetch('http://localhost:3000/inserirutilizador',options)
+        .then(res => res.json())
+        .then(res => alert(res.text))
+        .catch((err)=>{
+            alert('Ocorreu um erro no pedido')
+        })
+    }
     }else{
         const classlb= document.getElementsByClassName('obrig')
         for(let i=0;i<classlb.length;i++){
@@ -120,5 +119,31 @@ function getDados(){
         
     }   
 
+}
+
+function sendImage()
+{
+    //Recolher imagem
+    const image = document.getElementById('file').files[0]
+    let imageData = new FormData()
+    imageData.append('image',image)
+    if(image==undefined)
+    {
+        alert('Não selecionou uma imagem!')
+    }else{
+        let options = {
+            method: 'POST',
+            headers:{
+                'Accept': 'application/json'
+            },
+            body: imageData
+        }
+        fetch('http://localhost:3000/inserirutilizador', options)
+        .then(res => res.json())
+        .then(data => alert(data.message))
+        .catch((err)=>{
+            alert('Ocorreu um erro no pedido')
+        })
+    }
 }
 

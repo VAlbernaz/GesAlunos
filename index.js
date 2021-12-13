@@ -6,6 +6,13 @@ app.use(express.static('./public'))
 
 app.use(express.urlencoded({extended: true}))
 app.use(express.json({extended: false}))
+
+app.use(cors())
+app.use((req,res,next)=>{
+   res.header('Access-Control-Allow.Origin','*')
+   res.header('Access-Control-Allow-Headers','Origin,')
+})
+
 //define as rotas possiveis
 app.use('/navbar',require('./routes/navbarRoute'))
 app.use('/formdata',require('./routes/formdataRoute'))
