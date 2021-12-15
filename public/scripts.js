@@ -6,7 +6,7 @@ function init(){
 
 function loadNavBar(){
     const nbar=document.getElementById('nbar')
-    fetch('http://localhost:3000/navbar')
+    fetch('http://localhost:4000/navbar')
     .then(res => res.text())
     .then((html)=>{
         nbar.innerHTML += html
@@ -18,7 +18,7 @@ function loadNavBar(){
 
 function getTipos(){
 
-    fetch('http://localhost:3000/formdata')
+    fetch('http://localhost:4000/formdata')
     .then(res=> res.json())
     .then(data => preencheTipos(data))
     .catch()
@@ -104,7 +104,7 @@ function getDados(){
             },
             body: jsonDados
         }
-        fetch('http://localhost:3000/inserirutilizador',options)
+        fetch('http://localhost:4000/inserirutilizador',options)
         .then(res => res.json())
         .then(res => alert(res.text))
         .catch((err)=>{
@@ -125,25 +125,23 @@ function sendImage()
 {
     //Recolher imagem
     const image = document.getElementById('file').files[0]
+    const nomeUtilizador = document.getElementById('nome').value
     let imageData = new FormData()
-    imageData.append('image',image)
-    if(image==undefined)
-    {
-        alert('Não selecionou uma imagem!')
-    }else{
-        let options = {
-            method: 'POST',
-            headers:{
-                'Accept': 'application/json'
-            },
-            body: imageData
-        }
-        fetch('http://localhost:3000/inserirutilizador', options)
-        .then(res => res.json())
-        .then(data => alert(data.message))
-        .catch((err)=>{
-            alert('Ocorreu um erro no pedido')
-        })
+    imageData.append('image', image)
+    imageData.append('nomeUtilizador',nomeUtilizador)
+    var options = {
+        method: 'POST',
+        headers: {
+            'Accept':'application/json'
+        },
+        mode: 'cors',
+        body: imageData
     }
+    fetch('http://localhost:4000/foto', options)
+    .then(res => res.json())
+    .then(data => alert(data.res))
+    .catch((err)=>{
+        alert(err)
+    })
 }
 
