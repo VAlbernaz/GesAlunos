@@ -104,7 +104,7 @@ function getDados(){
             },
             body: jsonDados
         }
-        fetch('http://localhost:4000/inserirutilizador',options)
+        fetch('http://localhost:4000/utilizador',options)
         .then(res => res.json())
         .then(res => alert(res.text))
         .catch((err)=>{
@@ -125,10 +125,27 @@ function sendImage()
 {
     //Recolher imagem
     const image = document.getElementById('file').files[0]
-    const nomeUtilizador = document.getElementById('nome').value
-    let imageData = new FormData()
+    
+    const nome = document.getElementById('nome').value
+    const morada = document.getElementById('morada_rua').value
+    const moradaN = document.getElementById('morada_num').value
+    const date = document.getElementById('dnasc').value
+    const telem = document.getElementById('telem').value
+    const email = document.getElementById('email').value
+    const tipo = document.getElementById('tipo').value
+
+    const imageData = new FormData()
+     
+
     imageData.append('image', image)
-    imageData.append('nomeUtilizador',nomeUtilizador)
+    imageData.append('nome', nome)
+    imageData.append('morada',morada)
+    imageData.append('moradaN',moradaN)
+    imageData.append('date',date)
+    imageData.append('telem',parseInt(telem))
+    imageData.append('email',email)
+    imageData.append('tipo',tipo)
+   
     var options = {
         method: 'POST',
         headers: {
@@ -137,7 +154,7 @@ function sendImage()
         mode: 'cors',
         body: imageData
     }
-    fetch('http://localhost:4000/foto', options)
+    fetch('http://localhost:4000/utilizador', options)
     .then(res => res.json())
     .then(data => alert(data.res))
     .catch((err)=>{

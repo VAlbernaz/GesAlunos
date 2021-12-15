@@ -3,6 +3,7 @@ const app = express()
 const  path = require('path')
 const multer = require('multer')
 const cors = require('cors')
+const connection = require('./dbconnection.js')
 
 app.use(express.static('./public'))
 
@@ -16,7 +17,7 @@ app.use(express.json({extended: false}))
 //define as rotas possiveis
 app.use('/navbar',require('./routes/navbarRoute'))
 app.use('/formdata',require('./routes/formdataRoute'))
-app.use('/inserirutilizador',require('./routes/inserirUtilizadorRoutes'))
+//--------------app.use('/utilizador',require('./routes/inserirUtilizadorRoutes'))
 
 app.get('/', function(req,response){
    response.sendFile(path.join(__dirname, '/public.index.html'))
@@ -24,13 +25,15 @@ app.get('/', function(req,response){
 
 /************************************* */
 //Para Imagens
+let fileName
 const storage = multer.diskStorage({
    //define onde e que nome a imagem é guardada
    destination: (req,file,callback)=>{
        callback(null, './public/fotos')
    },
    filename: (req,file,callback)=>{
-       callback(null, file.originalname)
+      fileName =  Date.now() + '--' + file.originalname
+      callback(null, fileName)
    }
 })
  
@@ -39,9 +42,27 @@ const upload = multer({
    limits: {fileSize: 1000000}
 }).single('image')
  
-app.post('/foto',(req,res) => {
+app.post('/utilizador',(req,res) => {
+
    upload(req,res,(err)=>{
-      console.log(req.body.nomeUtilizador)
+
+      console.log(req.body)
+      console.log(req.file)
+      console.log(path.extname(req.file.filename))
+
+      connection.query(
+         "INSERT INTO utilizadores (nomeutilizador, moradarua,moradanumero,datanascimento,telemovel,email,fotourl,idtipos) VALUES (?,?,?,?,?,?,?,?)",
+         [req.body.nome,req.body.morada,req.body.moradaN,req.body.date,req.body.telem,req.body.email,fileName,req.body.tipo], 
+         (err,result)=>{
+          if(err){ 
+              console.log(err)
+              console.log('Erro na Base de Dados...')
+           }else{
+             console.log('Novo ID: ' + result.insertId)
+             res.json({res: 'Utilizador adicionado com sucesso'})
+          }
+      })
+
       if(err){
          res.json({res: err})
       }else{
@@ -50,9 +71,11 @@ app.post('/foto',(req,res) => {
             res.json({res : 'No file Selected'})
 
          }else{
-            res.json({res:"Sucesso!"})
+            
+            
          }
       }
+      
    })
 })
 
@@ -78,4 +101,5 @@ app.use((req,res,next) => {
 const port=4000
 app.listen(port, function(){
    console.log("Listenning on port: ",port)
-})  
+})
+
